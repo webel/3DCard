@@ -5,26 +5,39 @@ body {
 :root {
   --height: 300px;
   --width: 200px;
-  --depth: 2px;
+  --depth: 5px;
 }
 
 .scene {
   width: var(--width);
   height: var(--height);
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   margin: 80px;
   perspective: 400px;
 }
 
 .box {
-  width: 300px;
-  height: 200px;
+  width: var(--width);
+  height: var(--height);
   position: relative;
   transform-style: preserve-3d;
   transform: translateZ(-50px);
   transition: transform 1s;
+  /* Animation as a combination of show-front and show-back */
+  animation: show-front-and-back 5s linear infinite;
 }
 
+/* show-front-and-back animation */
+@keyframes show-front-and-back {
+  0% {
+    transform: translateZ(-50px) rotateY(0deg);
+  }
+  100% {
+    transform: translateZ(-50px) rotateY(-180deg);
+  }
+}
+
+/* Leaving these here for potential "manual" flips of the card */
 .box.show-front {
   transform: translateZ(-50px) rotateY(0deg);
 }
@@ -46,7 +59,7 @@ body {
 
 .box__face {
   position: absolute;
-  border: 2px solid black;
+  border: 1px solid black;
   font-size: 40px;
   font-weight: bold;
   color: white;
@@ -99,24 +112,26 @@ body {
 }
 
 .box__face--front {
-  transform: rotateY(0deg) translateZ(var(--depth));
+  transform: rotateY(0deg) translateZ(calc(var(--depth) / 2));
 }
 .box__face--back {
-  transform: rotateY(180deg) translateZ(var(--depth));
+  transform: rotateY(180deg) translateZ(calc(var(--depth) / 2));
 }
 
 .box__face--right {
-  transform: rotateY(90deg) translateZ(calc(var(--width)/2));
+  transform: rotateY(90deg)
+    translateZ(calc(var(--width) / 2 - var(--depth) / 2));
 }
 .box__face--left {
-  transform: rotateY(-90deg) translateZ(calc(var(--width)/2));
+  transform: rotateY(90deg)
+    translateZ(calc(var(--width) / 2 - var(--depth) / 2));
 }
 
 .box__face--top {
-  transform: rotateX(90deg) translateZ(50px);
+  transform: rotateX(90deg) translateZ(calc(50px + var(--depth) / 2));
 }
 .box__face--bottom {
-  transform: rotateX(-90deg) translateZ(250px);
+  transform: rotateX(-90deg) translateZ(calc(250px - var(--depth) / 2));
 }
 
 label {
