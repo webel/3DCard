@@ -15,11 +15,11 @@ body {
 }
 
 section h1 {
-    font-size: 8px;
-    text-align: center;
-    margin-top: 40px;
+  font-size: 8px;
+  text-align: center;
+  margin-top: 40px;
+  font-family: 'GalacticaGrid'
 }
-
 
 .scene {
   width: var(--width);
@@ -104,30 +104,37 @@ section h1 {
 }
 
 .box__face--front {
-  background: rgba(252, 252, 254, 1);
-
   background: linear-gradient(
-    0deg,
-    rgba(252, 252, 254, 1) 100%,
-    rgba(236, 236, 236, 1) 100%,
-    rgba(252, 252, 254, 1) 100%
+    135deg,
+    rgba(236, 236, 236, 1) 0%,
+    rgba(236, 236, 236, 1) 40%,
+    #ffffff 50%,
+    rgba(236, 236, 236, 1) 60%,
+    rgba(236, 236, 236, 1) 100%
   );
-  animation: shimmer 1s ease-in-out infinite;
+  background-position: center;
+  background-size: 500%;
+  animation: shimmer 10s linear infinite;
 }
 /* .box__face--right {
   background: linear-gradient(
     0deg,
     rgba(252, 252, 254, 1) 6%,
-    rgba(236, 236, 236, 0.85) 100%
+    rgba(236, 236, 236, 1) 100%
   );
 } */
 .box__face--back {
   background: linear-gradient(
-    0deg,
-    rgba(252, 252, 254, 1) 6%,
-    rgba(236, 236, 236, 1) 100%,
-    rgba(252, 252, 254, 1) 6%
+    135deg,
+    rgba(236, 236, 236, 1) 0%,
+    rgba(236, 236, 236, 1) 40%,
+    #ffffff 50%,
+    rgba(236, 236, 236, 1) 60%,
+    rgba(236, 236, 236, 1) 100%
   );
+  background-position: center;
+  background-size: 500%;
+  animation: shimmer 10s linear infinite;
   /* Very janky shimmer effect */
   /* background: linear-gradient(
     135deg,
