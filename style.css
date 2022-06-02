@@ -17,47 +17,56 @@ body {
 /************
 CONTENT styles
 */
+section {
+  border: 1px solid #ccc;
+  height: calc(var(--height) - 20px);
+  width: calc(var(--width) - 20px);
+  margin: 10px;
+  border-radius: 5%;
+}
+
 section h1 {
   font-size: 12px;
   text-align: center;
   line-height: 0;
-  font-family: 'GalacticaGrid'
+  font-family: "GalacticaGrid";
 }
 
 header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
 }
 
 .logo {
-    height: 60px;
-    position: absolute;
-    right: 0px;
-}
-
-#banny {
-    width: 300px;
-    position: absolute;
-    left: -50px;
-    /* top: 0px; */
+  height: 60px;
+  position: absolute;
+  right: 0px;
+  bottom: 1px;
 }
 
 .banny__container {
-    width: 300px;
-    position: relative;
+  width: 300px;
+  position: relative;
+}
+
+#banny {
+  width: 300px;
+  position: absolute;
+  left: -60px;
+  top: -14px;
 }
 
 #wifi {
-    position: fixed;
-    top: 10px;
-    right: 14px;
+  position: fixed;
+  top: 14px;
+  right: 16px;
 }
 
 .box__face--back h1 {
-    font-size: 48px;
-    line-height: 1;;
+  font-size: 48px;
+  line-height: 1;
 }
 /* ******* */
 
