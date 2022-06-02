@@ -14,6 +14,13 @@ body {
   );
 }
 
+section h1 {
+    font-size: 8px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+
 .scene {
   width: var(--width);
   height: var(--height);
@@ -76,8 +83,6 @@ body {
   border-radius: 5%;
   width: var(--width);
   height: var(--height);
-
-  line-height: var(--height);
 }
 
 .box__face--right,
@@ -87,7 +92,6 @@ body {
 
   top: 10px;
   left: 100px;
-  line-height: var(--height);
 }
 
 .box__face--top,
@@ -97,50 +101,79 @@ body {
 
   top: 50px;
   left: 10px;
-  line-height: 100px;
 }
 
 .box__face--front {
+  background: rgba(252, 252, 254, 1);
+
+  background: linear-gradient(
+    0deg,
+    rgba(252, 252, 254, 1) 100%,
+    rgba(236, 236, 236, 1) 100%,
+    rgba(252, 252, 254, 1) 100%
+  );
+  animation: shimmer 1s ease-in-out infinite;
+}
+/* .box__face--right {
   background: linear-gradient(
     0deg,
     rgba(252, 252, 254, 1) 6%,
-    rgba(236, 236, 236, 0.8477984943977591) 100%
+    rgba(236, 236, 236, 0.85) 100%
   );
-}
-.box__face--right {
-  background: linear-gradient(
-    0deg,
-    rgba(252, 252, 254, 1) 6%,
-    rgba(236, 236, 236, 0.8477984943977591) 100%
-  );
-}
+} */
 .box__face--back {
   background: linear-gradient(
     0deg,
     rgba(252, 252, 254, 1) 6%,
-    rgba(236, 236, 236, 0.8477984943977591) 100%
+    rgba(236, 236, 236, 1) 100%,
+    rgba(252, 252, 254, 1) 6%
   );
+  /* Very janky shimmer effect */
+  /* background: linear-gradient(
+    135deg,
+    rgba(236, 236, 236, 0.85) 0%,
+    rgba(236, 236, 236, 0.85) 40%,
+    #ffffff 50%,
+    rgba(236, 236, 236, 0.85) 60%,
+    rgba(236, 236, 236, 0.85) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(236, 236, 236, 0.85)', endColorstr='rgba(236, 236, 236, 0.85)',GradientType=1 );
+  background-repeat: no-repeat;
+  background-position: 0px;
+  background-size: 300%;
+  animation: shimmer 10s linear infinite; */
 }
-.box__face--left {
+/* .box__face--left {
   background: linear-gradient(
     0deg,
     rgba(252, 252, 254, 1) 6%,
-    rgba(236, 236, 236, 0.8477984943977591) 100%
+    rgba(236, 236, 236, 0.85) 100%
   );
-}
+} */
 .box__face--top {
   background: linear-gradient(
     0deg,
     rgba(252, 252, 254, 1) 6%,
-    rgba(236, 236, 236, 0.8477984943977591) 100%
+    rgba(236, 236, 236, 0.85) 100%
   );
 }
 .box__face--bottom {
+  background: rgba(252, 252, 254, 1);
   background: linear-gradient(
     0deg,
     rgba(252, 252, 254, 1) 6%,
-    rgba(236, 236, 236, 0.8477984943977591) 100%
+    rgba(236, 236, 236, 1) 100%
   );
+}
+
+/* Shimmer animation keyframes */
+@keyframes shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
 }
 
 .box__face--front {
