@@ -24,7 +24,7 @@ body {
   transform: translateZ(-50px);
   transition: transform 1s;
   /* Animation as a combination of show-front and show-back */
-  animation: show-front-and-back 5s ease-in-out infinite;
+  animation: show-front-and-back 5s linear infinite;
 }
 
 /* show-front-and-back animation */
@@ -32,11 +32,11 @@ body {
   0% {
     transform: translateZ(-50px) rotateY(0deg);
   }
-  50% {
+  /* 50% {
     transform: translateZ(-50px) rotateY(180deg);
-  }
+  } */
   100% {
-    transform: translateZ(-50px) rotateY(-180deg);
+    transform: translateZ(-50px) rotateY(360deg);
   }
 }
 
