@@ -12,9 +12,10 @@
   type Size = {
     width?: string;
     height?: string;
+    "font-size"?: string;
   };
 
-  type Style = {
+  type TextStyle = {
     color?: string;
     placement?: Placement;
     simplePlacement?: "center" | "left" | "right";
@@ -32,20 +33,21 @@
       | [
           {
             icon: string;
-            iconStyle?: Style;
+            // NOTE: Icons are svg's and are thus styleable with textStyle
+            iconStyle?: TextStyle;
           }
         ]
       | [];
     image?: string;
-    imageStyle?: Style;
+    imageStyle?: ImageStyle;
     logo?: string;
     logoStyle?: ImageStyle;
     title?: string;
-    titleStyle?: Style;
+    titleStyle?: TextStyle;
     leftVertical?: string;
-    leftVerticalStyle?: Style;
+    leftVerticalStyle?: TextStyle;
     rightVertical?: string;
-    rightVerticalStyle?: Style;
+    rightVerticalStyle?: TextStyle;
   };
 
   export let cardConfig: { front: CardFace; back: CardFace; common: CardFace } =
@@ -62,6 +64,9 @@
       },
       back: {
         title: "The Banny Verse",
+        titleStyle: {
+          size: { "font-size": "48px" },
+        },
         icons: [],
         logo: "logo.png",
         logoStyle: {
@@ -93,7 +98,7 @@
   const backIcons = [...(common.icons || []), ...(back.icons || [])];
   const frontIcons = [...(common.icons || []), ...(front.icons || [])];
 
-  function getStyleString(style: Style | undefined) {
+  function getStyleString(style: ImageStyle | TextStyle | undefined) {
     if (!style) {
       return "";
     }
@@ -164,7 +169,9 @@
         {#each backIcons as icon}
           <Icon name={icon.icon} />
         {/each}
-        <h1>{back.title}</h1>
+        {#if back.title}
+          <h1 style={getStyleString(back.titleStyle)}>{back.title}</h1>
+        {/if}
         {#if back.logo || common.logo}
           <img
             src={back.logo || common.logo}
@@ -238,7 +245,6 @@
   }
 
   .box__face--back h1 {
-    font-size: 48px;
     line-height: 1;
   }
   /* ******* */
@@ -304,7 +310,8 @@
     left: 10px;
   }
 
-  .box__face--front, .box__face--back {
+  .box__face--front,
+  .box__face--back {
     animation: shimmer 10s linear infinite;
   }
 
