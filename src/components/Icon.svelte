@@ -1,6 +1,7 @@
 <script lang="ts">
-  export let name: string = "wifi";
+  export let name = "wifi";
 
+  // Svg icons from https://tablericons.com/
   const paths = {
     wifi: [
       "M9.172 15.172a4 4 0 0 1 5.656 0",

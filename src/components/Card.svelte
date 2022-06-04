@@ -1,5 +1,45 @@
-<script>
+<script lang="ts">
   import Icon from "./Icon.svelte";
+
+  type CardFace = {
+    background?: string;
+    icons?: [
+      {
+        icon: string;
+        iconPlacement: {
+          top: string;
+          right: string;
+        };
+      }
+    ];
+    title?: string;
+    titlePlacement?: "top" | "bottom";
+    titleSize?: "small" | "medium" | "large";
+    titleColor?: string;
+  };
+
+  export let cardConfig: { front: CardFace; back: CardFace; common: CardFace } =
+    {
+      front: {
+        title: "Ivan the Boneless",
+      },
+      back: {
+        title: "The Banny Verse",
+      },
+      common: {
+        icons: [
+          {
+            icon: "wifi",
+            iconPlacement: {
+              top: "12px",
+              right: "12px",
+            },
+          },
+        ],
+      },
+    };
+
+  type CardConfig = typeof cardConfig;
 </script>
 
 <div class="scene">
@@ -7,7 +47,7 @@
     <div class="box__face box__face--front">
       <section>
         <header>
-          <h1>Ivan the Boneless</h1>
+          <h1>{cardConfig.front.title}</h1>
           <Icon name="wifi" />
         </header>
         <div class="banny__container">
@@ -20,7 +60,7 @@
         <header>
           <Icon name="wifi" />
         </header>
-        <h1>The Banny Verse</h1>
+        <h1>{cardConfig.back.title}</h1>
         <img class="logo" src="logo.png" alt="BannyVerse Logo" />
       </section>
     </div>
@@ -103,7 +143,6 @@
   .scene {
     width: var(--width);
     height: var(--height);
-    /* border: 1px solid #ccc; */
     margin: 80px;
     perspective: 400px;
   }
