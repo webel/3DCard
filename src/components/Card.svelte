@@ -73,6 +73,7 @@
         },
       },
       common: {
+        background: "rgba(236, 236, 236, 1)",
         icons: [
           {
             icon: "wifi",
@@ -111,11 +112,31 @@
     }
     return `${sizeString};`;
   }
+
+  function getBackgroundString(background: string | undefined) {
+    if (!background) {
+      return "";
+    }
+    return `background: linear-gradient(
+      135deg,
+      ${background} 0%,
+      ${background} 40%,
+      #ffffff 50%,
+      ${background} 60%,
+      ${background} 100%
+    );
+    background-size: 500%;
+    background-position: center;
+    `;
+  }
 </script>
 
 <div class="scene">
   <div class="box">
-    <div class="box__face box__face--front">
+    <div
+      class="box__face box__face--front"
+      style={getBackgroundString(front.background || common.background)}
+    >
       <section>
         <h1
           class:center={front.titleStyle?.simplePlacement === "center"}
@@ -135,7 +156,10 @@
         </div>
       </section>
     </div>
-    <div class="box__face box__face--back">
+    <div
+      class="box__face box__face--back"
+      style={getBackgroundString(front.background || common.background)}
+    >
       <section>
         {#each backIcons as icon}
           <Icon name={icon.icon} />
@@ -280,48 +304,8 @@
     left: 10px;
   }
 
-  .box__face--front {
-    background: linear-gradient(
-      135deg,
-      rgba(236, 236, 236, 1) 0%,
-      rgba(236, 236, 236, 1) 40%,
-      #ffffff 50%,
-      rgba(236, 236, 236, 1) 60%,
-      rgba(236, 236, 236, 1) 100%
-    );
-    background-position: center;
-    background-size: 500%;
+  .box__face--front, .box__face--back {
     animation: shimmer 10s linear infinite;
-  }
-
-  .box__face--back {
-    background: linear-gradient(
-      135deg,
-      rgba(236, 236, 236, 1) 0%,
-      rgba(236, 236, 236, 1) 40%,
-      #ffffff 50%,
-      rgba(236, 236, 236, 1) 60%,
-      rgba(236, 236, 236, 1) 100%
-    );
-    background-position: center;
-    background-size: 500%;
-    animation: shimmer 10s linear infinite;
-  }
-
-  .box__face--top {
-    background: linear-gradient(
-      0deg,
-      rgba(252, 252, 254, 1) 6%,
-      rgba(236, 236, 236, 0.85) 100%
-    );
-  }
-  .box__face--bottom {
-    background: rgba(252, 252, 254, 1);
-    background: linear-gradient(
-      0deg,
-      rgba(252, 252, 254, 1) 6%,
-      rgba(236, 236, 236, 1) 100%
-    );
   }
 
   /* Shimmer animation keyframes */
