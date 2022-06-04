@@ -122,6 +122,10 @@
     if (!background) {
       return "";
     }
+    // TODO background options of animations;
+    // - shimmer
+    // - sparkles
+    // - degrees of gradient
     return `background: linear-gradient(
       135deg,
       ${background} 0%,
