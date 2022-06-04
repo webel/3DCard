@@ -15,7 +15,13 @@
   };
 
   type Style = {
+    color?: string;
+    placement?: Placement;
     simplePlacement?: "center" | "left" | "right";
+    size?: Size;
+  };
+
+  type ImageStyle = {
     placement?: Placement;
     size?: Size;
   };
@@ -30,13 +36,16 @@
           }
         ]
       | [];
+    image?: string;
+    imageStyle?: Style;
     logo?: string;
-    logoStyle?: Style;
+    logoStyle?: ImageStyle;
     title?: string;
     titleStyle?: Style;
-    titleColor?: string;
     leftVertical?: string;
+    leftVerticalStyle?: Style;
     rightVertical?: string;
+    rightVerticalStyle?: Style;
   };
 
   export let cardConfig: { front: CardFace; back: CardFace; common: CardFace } =
@@ -45,6 +54,11 @@
         title: "Ivan the Boneless",
         titleStyle: { placement: { top: "15px" }, simplePlacement: "center" },
         icons: [],
+        image: "characters/15.png",
+        imageStyle: {
+          size: { height: "300px" },
+          placement: { left: "-60px", top: "18px" },
+        },
       },
       back: {
         title: "The Banny Verse",
@@ -52,9 +66,10 @@
         logo: "logo.png",
         logoStyle: {
           placement: {
-            top: "0px",
-            right: "0px",
+            bottom: "-3px",
+            right: "-15px",
           },
+          size: { height: "100px" },
         },
       },
       common: {
@@ -81,14 +96,20 @@
     if (!style) {
       return "";
     }
-    const { placement, size } = style;
-    const styleString = Object.entries(placement || {})
+    const { color, placement, size } = style;
+    const placementString = Object.entries(placement || {})
       .map(([key, value]) => `${key}: ${value}`)
       .join(";");
     const sizeString = Object.entries(size || {})
       .map(([key, value]) => `${key}: ${value}`)
       .join(";");
-    return `${styleString}; ${sizeString}; position: absolute;`;
+
+    const styleString = `${placementString}; ${sizeString}; color: ${color};`;
+
+    if (placement) {
+      return `${styleString}; position: absolute;`;
+    }
+    return `${sizeString};`;
   }
 </script>
 
@@ -105,8 +126,12 @@
         {#each frontIcons as icon}
           <Icon name={icon.icon} />
         {/each}
-        <div class="banny__container">
-          <img id="banny" src="/characters/15.png" alt="Banny" />
+        <div class="image__container">
+          <img
+            src={front.image}
+            alt="Banny"
+            style={getStyleString(front.imageStyle)}
+          />
         </div>
       </section>
     </div>
@@ -116,11 +141,22 @@
           <Icon name={icon.icon} />
         {/each}
         <h1>{back.title}</h1>
-        <img
-          class="logo"
-          src={back.logo || common.logo}
-          alt="BannyVerse Logo"
-        />
+        {#if back.logo || common.logo}
+          <img
+            src={back.logo || common.logo}
+            alt="BannyVerse Logo"
+            style={getStyleString(back.logoStyle)}
+          />
+        {/if}
+        {#if back.image || common.image}
+          <div class="image__container">
+            <img
+              src={back.image || common.image}
+              alt="Banny"
+              style={getStyleString(front.imageStyle)}
+            />
+          </div>
+        {/if}
       </section>
     </div>
     <div class="box__face box__face--right" />
@@ -166,23 +202,9 @@
     width: calc(var(--width) - 20px);
   }
 
-  .logo {
-    height: 60px;
-    position: absolute;
-    right: 0px;
-    bottom: 1px;
-  }
-
-  .banny__container {
+  .image__container {
     width: 300px;
     position: relative;
-  }
-
-  #banny {
-    width: 300px;
-    position: absolute;
-    left: -60px;
-    top: -14px;
   }
 
   :global(#icon-wifi) {
