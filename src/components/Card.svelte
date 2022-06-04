@@ -115,7 +115,7 @@
     if (placement) {
       return `${styleString}; position: absolute;`;
     }
-    return `${sizeString};`;
+    return `${styleString};`;
   }
 
   function getBackgroundString(background: string | undefined) {
@@ -143,12 +143,14 @@
       style={getBackgroundString(front.background || common.background)}
     >
       <section>
-        <h1
-          class:center={front.titleStyle?.simplePlacement === "center"}
-          style={getStyleString(front.titleStyle)}
-        >
-          {front.title}
-        </h1>
+        {#if front.title}
+          <h1
+            class:center={front.titleStyle?.simplePlacement === "center"}
+            style={getStyleString(front.titleStyle)}
+          >
+            {front.title}
+          </h1>
+        {/if}
         {#each frontIcons as icon}
           <Icon name={icon.icon} />
         {/each}
@@ -163,7 +165,7 @@
     </div>
     <div
       class="box__face box__face--back"
-      style={getBackgroundString(front.background || common.background)}
+      style={getBackgroundString(back.background || common.background)}
     >
       <section>
         {#each backIcons as icon}
