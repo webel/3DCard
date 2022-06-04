@@ -1,55 +1,110 @@
 <script lang="ts">
   import Icon from "./Icon.svelte";
 
+  type Placement = {
+    // TODO how do I force the type to be atleast top/bottom or left/right?
+    top?: string;
+    right?: string;
+    bottom?: string;
+    left?: string;
+  };
+
+  type Size = {
+    width?: string;
+    height?: string;
+  };
+
+  type Style = {
+    simplePlacement?: "center" | "left" | "right";
+    placement?: Placement;
+    size?: Size;
+  };
+
   type CardFace = {
     background?: string;
-    icons?: [
-      {
-        icon: string;
-        iconPlacement: {
-          top: string;
-          right: string;
-        };
-      }
-    ];
+    icons?:
+      | [
+          {
+            icon: string;
+            iconStyle?: Style;
+          }
+        ]
+      | [];
+    logo?: string;
+    logoStyle?: Style;
     title?: string;
-    titlePlacement?: "top" | "bottom";
-    titleSize?: "small" | "medium" | "large";
+    titleStyle?: Style;
     titleColor?: string;
+    leftVertical?: string;
+    rightVertical?: string;
   };
 
   export let cardConfig: { front: CardFace; back: CardFace; common: CardFace } =
     {
       front: {
         title: "Ivan the Boneless",
+        titleStyle: { placement: { top: "15px" }, simplePlacement: "center" },
+        icons: [],
       },
       back: {
         title: "The Banny Verse",
+        icons: [],
+        logo: "logo.png",
+        logoStyle: {
+          placement: {
+            top: "0px",
+            right: "0px",
+          },
+        },
       },
       common: {
         icons: [
           {
             icon: "wifi",
-            iconPlacement: {
-              top: "12px",
-              right: "12px",
+            iconStyle: {
+              placement: {
+                top: "12px",
+                right: "12px",
+              },
             },
           },
         ],
       },
     };
 
-  type CardConfig = typeof cardConfig;
+  const { back, front, common } = cardConfig;
+
+  const backIcons = [...(common.icons || []), ...(back.icons || [])];
+  const frontIcons = [...(common.icons || []), ...(front.icons || [])];
+
+  function getStyleString(style: Style | undefined) {
+    if (!style) {
+      return "";
+    }
+    const { placement, size } = style;
+    const styleString = Object.entries(placement || {})
+      .map(([key, value]) => `${key}: ${value}`)
+      .join(";");
+    const sizeString = Object.entries(size || {})
+      .map(([key, value]) => `${key}: ${value}`)
+      .join(";");
+    return `${styleString}; ${sizeString}; position: absolute;`;
+  }
 </script>
 
 <div class="scene">
   <div class="box">
     <div class="box__face box__face--front">
       <section>
-        <header>
-          <h1>{cardConfig.front.title}</h1>
-          <Icon name="wifi" />
-        </header>
+        <h1
+          class:center={front.titleStyle?.simplePlacement === "center"}
+          style={getStyleString(front.titleStyle)}
+        >
+          {front.title}
+        </h1>
+        {#each frontIcons as icon}
+          <Icon name={icon.icon} />
+        {/each}
         <div class="banny__container">
           <img id="banny" src="/characters/15.png" alt="Banny" />
         </div>
@@ -57,11 +112,15 @@
     </div>
     <div class="box__face box__face--back">
       <section>
-        <header>
-          <Icon name="wifi" />
-        </header>
-        <h1>{cardConfig.back.title}</h1>
-        <img class="logo" src="logo.png" alt="BannyVerse Logo" />
+        {#each backIcons as icon}
+          <Icon name={icon.icon} />
+        {/each}
+        <h1>{back.title}</h1>
+        <img
+          class="logo"
+          src={back.logo || common.logo}
+          alt="BannyVerse Logo"
+        />
       </section>
     </div>
     <div class="box__face box__face--right" />
@@ -102,11 +161,9 @@
     font-family: "GalacticaGrid";
   }
 
-  header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 12px;
+  .center {
+    text-align: center;
+    width: calc(var(--width) - 20px);
   }
 
   .logo {
