@@ -27,8 +27,15 @@
     size?: Size;
   };
 
+  type BorderStyle = {
+    color?: string;
+    type?: "solid" | "dashed" | "dotted";
+    width?: string;
+  };
+
   type CardFace = {
     background?: string;
+    innerBorder?: BorderStyle;
     icons?:
       | [
           {
@@ -79,6 +86,11 @@
       },
       common: {
         background: "rgba(236, 236, 236, 1)",
+        innerBorder: {
+          color: "rgba(0, 0, 0, 0.2)",
+          type: "solid",
+          width: "1px",
+        },
         icons: [
           {
             icon: "wifi",
@@ -138,6 +150,13 @@
     background-position: center;
     `;
   }
+
+  function getBorderString(border: BorderStyle | undefined) {
+    if (!border) {
+      return "";
+    }
+    return `border: ${border.width} ${border.type} ${border.color};`;
+  }
 </script>
 
 <div class="scene">
@@ -146,7 +165,10 @@
       class="box__face box__face--front"
       style={getBackgroundString(front.background || common.background)}
     >
-      <section>
+      <section
+        class:innerBorder={front.innerBorder || common.innerBorder}
+        style={getBorderString(front.innerBorder || common.innerBorder)}
+      >
         {#if front.title}
           <h1
             class:center={front.titleStyle?.simplePlacement === "center"}
@@ -161,7 +183,7 @@
         <div class="image__container">
           <img
             src={front.image}
-            alt="Banny"
+            alt={front.title || common.title}
             style={getStyleString(front.imageStyle)}
           />
         </div>
@@ -171,7 +193,10 @@
       class="box__face box__face--back"
       style={getBackgroundString(back.background || common.background)}
     >
-      <section>
+      <section
+        class:innerBorder={back.innerBorder || common.innerBorder}
+        style={getBorderString(back.innerBorder || common.innerBorder)}
+      >
         {#each backIcons as icon}
           <Icon name={icon.icon} />
         {/each}
@@ -181,7 +206,7 @@
         {#if back.logo || common.logo}
           <img
             src={back.logo || common.logo}
-            alt="BannyVerse Logo"
+            alt={back.title || common.title}
             style={getStyleString(back.logoStyle)}
           />
         {/if}
