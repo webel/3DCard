@@ -28,35 +28,47 @@
         title: "Are you ready?",
         titleStyle: {
           color: "orange",
-		  placement: {
-			top: "55px",
-			left: "15px",
-		  },
+          placement: {
+            top: "55px",
+            left: "15px",
+          },
           size: {
             "font-size": "1.5em",
           },
         },
         background: "black",
       },
-      common: {},
+      common: {
+        innerBorder: {
+          color: "gold",
+          type: "dashed",
+          width: "2px",
+        },
+      },
     }}
   />
   <Card
+    cardType="circle"
     cardConfig={{
       front: {
         titleStyle: { placement: { top: "15px" }, simplePlacement: "center" },
         icons: [],
         image: "characters/21.png",
         imageStyle: {
-          placement: { top: "35px", left: "-50px" },
-          size: { width: "280px"}
+          placement: { top: "34px", left: "-10px" },
+          size: { width: "280px" },
         },
         logo: "characters/15.png",
       },
       back: {},
       common: {
-		background: "slategray"
-	  },
+        background: "slategray",
+        innerBorder: {
+          width: "1px",
+          type: "solid",
+          color: "white",
+        },
+      },
     }}
   />
 </main>
@@ -67,6 +79,6 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-	flex-wrap: wrap;
+    flex-wrap: wrap;
   }
 </style>

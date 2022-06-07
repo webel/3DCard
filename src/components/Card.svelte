@@ -1,6 +1,8 @@
 <script lang="ts">
   import Icon from "./Icon.svelte";
 
+  type CardType = "box" | "circle";
+
   type Placement = {
     // TODO how do I force the type to be atleast top/bottom or left/right?
     top?: string;
@@ -57,6 +59,7 @@
     rightVerticalStyle?: TextStyle;
   };
 
+  export let cardType: CardType = "box";
   export let cardConfig: { front: CardFace; back: CardFace; common: CardFace } =
     {
       front: {
@@ -151,23 +154,30 @@
     `;
   }
 
-  function getBorderString(border: BorderStyle | undefined) {
+  function getBorderString(border: BorderStyle | undefined, round = false) {
     if (!border) {
       return "";
     }
-    return `border: ${border.width} ${border.type} ${border.color};`;
+    const string = `border: ${border.width} ${border.type} ${border.color};`;
+    if (round) {
+      return `${string}; border-radius: 50%;`;
+    }
+    return string;
   }
 </script>
 
 <div class="scene">
   <div class="box">
     <div
-      class="box__face box__face--front"
+      class={`${cardType}__face ${cardType}__face--front`}
       style={getBackgroundString(front.background || common.background)}
     >
       <section
-        class:innerBorder={front.innerBorder || common.innerBorder}
-        style={getBorderString(front.innerBorder || common.innerBorder)}
+        class:round={cardType === "circle"}
+        style={getBorderString(
+          front.innerBorder || common.innerBorder,
+          cardType === "circle"
+        )}
       >
         {#if front.title}
           <h1
@@ -190,12 +200,15 @@
       </section>
     </div>
     <div
-      class="box__face box__face--back"
+      class={`${cardType}__face ${cardType}__face--back`}
       style={getBackgroundString(back.background || common.background)}
     >
       <section
-        class:innerBorder={back.innerBorder || common.innerBorder}
-        style={getBorderString(back.innerBorder || common.innerBorder)}
+        class:round={cardType === "circle"}
+        style={getBorderString(
+          back.innerBorder || common.innerBorder,
+          cardType === "circle"
+        )}
       >
         {#each backIcons as icon}
           <Icon name={icon.icon} />
@@ -245,7 +258,6 @@
   Card content styles
   */
   section {
-    border: 1px solid #ccc;
     height: calc(var(--height) - 20px);
     width: calc(var(--width) - 20px);
     margin: 10px;
@@ -257,6 +269,11 @@
     text-align: center;
     line-height: 0;
     font-family: "GalacticaGrid";
+  }
+
+  section.round {
+    height: calc(var(--height) - 20px);
+    width: calc(var(--height) - 20px);
   }
 
   .center {
@@ -312,7 +329,8 @@
     }
   }
 
-  .box__face {
+  .box__face,
+  .circle__face {
     position: absolute;
   }
 
@@ -320,6 +338,13 @@
   .box__face--back {
     border-radius: 5%;
     width: var(--width);
+    height: var(--height);
+  }
+
+  .circle__face--front,
+  .circle__face--back {
+    border-radius: 50%;
+    width: var(--height);
     height: var(--height);
   }
 
@@ -342,7 +367,9 @@
   }
 
   .box__face--front,
-  .box__face--back {
+  .box__face--back,
+  .circle__face--front,
+  .circle__face--back {
     animation: shimmer 10s linear infinite;
   }
 
@@ -356,10 +383,12 @@
     }
   }
 
-  .box__face--front {
+  .box__face--front,
+  .circle__face--front {
     transform: rotateY(0deg) translateZ(calc(var(--depth) / 2));
   }
-  .box__face--back {
+  .box__face--back,
+  .circle__face--back {
     transform: rotateY(180deg) translateZ(calc(var(--depth) / 2));
   }
 
