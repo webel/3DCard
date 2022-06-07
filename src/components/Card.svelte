@@ -187,6 +187,22 @@
             {front.title}
           </h1>
         {/if}
+        {#if front.leftVertical}
+          <p
+            class:left={front.leftVertical}
+            style={getStyleString(front.leftVerticalStyle)}
+          >
+            {front.leftVertical}
+          </p>
+        {/if}
+        {#if front.rightVertical}
+        <p
+          class:right={front.rightVertical}
+          style={getStyleString(front.rightVerticalStyle)}
+        >
+          {front.rightVertical}
+        </p>
+      {/if}
         {#each frontIcons as icon}
           <Icon name={icon.icon} />
         {/each}
@@ -260,7 +276,7 @@
   section {
     height: calc(var(--height) - 20px);
     width: calc(var(--width) - 20px);
-    margin: 10px;
+    margin: 8px;
     border-radius: 5%;
   }
 
@@ -279,6 +295,19 @@
   .center {
     text-align: center;
     width: calc(var(--width) - 20px);
+  }
+
+  .left, .right {
+    position: absolute;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+  }
+
+  .left {
+    transform: rotate(270deg);
+  }
+
+  .right {
+    transform: rotate(90deg);
   }
 
   .image__container {
@@ -312,7 +341,7 @@
     transform: translateZ(-50px);
     transition: transform 1s;
     /* Animation as a combination of show-front and show-back */
-    animation: show-front-and-back 10s ease-in-out infinite;
+    /* animation: show-front-and-back 10s ease-in-out infinite; */
   }
 
   /* show-front-and-back animation */

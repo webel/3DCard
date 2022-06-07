@@ -22,6 +22,22 @@
           placement: { top: "50px", left: "-15px" },
           size: { height: "200px" },
         },
+        leftVertical: "The rippin', the tearin'",
+        leftVerticalStyle: {
+          size: {
+            "font-size": "10px",
+          },
+          placement: { top: "130px", left: "-48px" },
+          color: "black",
+        },
+        rightVertical: "The rippin', the tearin'",
+        rightVerticalStyle: {
+          size: {
+            "font-size": "10px",
+          },
+          placement: { top: "130px", right: "-48px" },
+          color: "black",
+        },
         logo: "characters/15.png",
       },
       back: {
